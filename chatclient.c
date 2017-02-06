@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 {
 
 	int socketFD, portNumber, charsWritten, charsRead;
+	int quit = 0;							//0 while the user wishes to continue, 1 if the user wishes to quit the program
 
 	//socket structs
 	struct sockaddr_in serverAddress;
@@ -52,21 +53,11 @@ int main(int argc, char *argv[])
 
 	char returnBuffer[501];					//array to hold string response received from server
 	char authenticator[2] = {'#', '\0'};	//a string that should match the authentication message sent from the server
-	char handle[20];
-	char message[501];
-	char prompt[20];
+	char handle[20];						//a string to hold the user's handle
+	char message[501];						//a string containing the user's message
+	char prompt[20];						//a string containing the prompt for user entry
 
-	printf("Welcome!\n");
-	getUserInput(handle);
-
-	printf("Your hanlde will be %s \n", handle);
-	handle[strcspn(handle, "\n")] = '\0'; //Remove the trailing \n 
-	sprintf(prompt, "%s >", handle);	 //append ">" to handle
-	printf("Enter a message: ");		//get message from user
-	fgets(message, 500, stdin);
-	printf("%s ", prompt);
-	printf("%s\n", message);
-
+	
 	// Set up the server address struct
 	memset((char*)&serverAddress, '\0', sizeof(serverAddress)); // Clear out the address struct
 	portNumber = atoi(argv[1]); // Get the port number, convert to an integer from a string
@@ -85,6 +76,39 @@ int main(int argc, char *argv[])
 	if (connect(socketFD, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) < 0) { // Connect socket to address
 		fprintf(stderr, "CLIENT: ERROR connectiong\n");
 	}	
+
+	printf("Welcome!\n");
+	getUserInput(handle);
+
+	printf("Your hanlde will be %s \n", handle);
+	handle[strcspn(handle, "\n")] = '\0'; //Remove the trailing \n 
+	sprintf(prompt, "%s >", handle);	 //append ">" to handle
+
+	//loop accepting messages until user wishes to quit
+	while (quit == 0){
+		printf("Enter a message: ");		//get message from user
+		fgets(message, 500, stdin);
+		printf("%s ", prompt);
+		printf("%s\n", message);
+
+		// Send message to server
+		charsWritten = send(socketFD, message, strlen(message), 0); // Write to the server
+		if (charsWritten < 0) {
+			fprintf(stderr, "CLIENT ERROR writing to socket\n");
+		}
+
+		//check for completion
+		if (charsWritten < strlen(message)) {
+			fprintf(stderr, "CLIENT: WARNING: Not all data written to socket!\n");
+		}
+
+		// Get return message from server
+		memset(returnBuffer, '\0', sizeof(returnBuffer)); // Clear out the buffer again for reuse
+		charsRead = recv(socketFD, returnBuffer, sizeof(returnBuffer) - 1, 0); // Read data from the socket, leaving \0 at end
+		if (charsRead < 0) { fprintf(stderr, "CLIENT: ERROR reading from socket\n"); }
+
+		printf("Server responds: %s", message);
+	}
 
 /*
 	//send authentication message to server
@@ -111,23 +135,7 @@ int main(int argc, char *argv[])
 	buffer[strcspn(buffer, "\n")] = '\0'; // Remove trailing \n from buffer
 */
 
-	// Send message to server
-	charsWritten = send(socketFD, message, strlen(message), 0); // Write to the server
-	if (charsWritten < 0) {
-		fprintf(stderr, "CLIENT ERROR writing to socket\n");
-	}
-
-	//check for completion
-	if (charsWritten < strlen(message)) {
-		fprintf(stderr, "CLIENT: WARNING: Not all data written to socket!\n");
-	}
-
-	// Get return message from server
-	memset(returnBuffer, '\0', sizeof(returnBuffer)); // Clear out the buffer again for reuse
-	charsRead = recv(socketFD, returnBuffer, sizeof(returnBuffer) - 1, 0); // Read data from the socket, leaving \0 at end
-	if (charsRead < 0) { fprintf(stderr, "CLIENT: ERROR reading from socket\n"); }
-
-	printf("Server responds: %s", message);
+	
 	
 	return 0;
 }
