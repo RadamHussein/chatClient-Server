@@ -5,12 +5,20 @@ import sys
 serverPort = int(sys.argv[1])
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serverSocket.bind(('', serverPort))
+
+#Bind socket
+try:
+	serverSocket.bind(('', serverPort))
+except socket.error as msg:
+	print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+
+#Start listening on socket	
 serverSocket.listen(1)
 print 'Server started on Port: %d' % serverPort
 
 while 1:
 	connectionSocket, addr = serverSocket.accept()
+	print 'Connected with ' + addr[0] + ':' + str(addr[1])
 	
 	echo = connectionSocket.recv(1024)
 	connectionSocket.send(echo)
