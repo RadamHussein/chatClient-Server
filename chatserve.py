@@ -25,5 +25,7 @@ while 1:
 	serverMessage = raw_input("Enter message: ")
 	print 'Server > %s' % serverMessage
 	connectionSocket.send(serverMessage)
-	connectionSocket.close()
+
+
+connectionSocket.close()
 	
