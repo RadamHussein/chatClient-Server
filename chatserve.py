@@ -24,6 +24,6 @@ while 1:
 	print 'Client > %s' % clientMessage
 	serverMessage = input('Enter message: ')
 	print 'Server > %s' % serverMessage
-	connectionSocket.send(serverMessage)
+	#connectionSocket.send(serverMessage)
 	connectionSocket.close()
 	
