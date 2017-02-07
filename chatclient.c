@@ -107,7 +107,10 @@ int main(int argc, char *argv[])
 		charsRead = recv(socketFD, returnBuffer, sizeof(returnBuffer) - 1, 0); // Read data from the socket, leaving \0 at end
 		if (charsRead < 0) { fprintf(stderr, "CLIENT: ERROR reading from socket\n"); }
 
-		printf("Server > %s\n", returnBuffer);
+		printf("Server > %s\n", returnBuffer);			  //display returned message
+
+		memset(returnBuffer, '\0', sizeof(returnBuffer)); // Clear out the buffer again for reuse
+
 	}
 
 /*
