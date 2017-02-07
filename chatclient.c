@@ -92,8 +92,8 @@ int main(int argc, char *argv[])
 		fgets(message, 501, stdin);									
 		sprintf(message_with_handle, "%s %s", prompt, message);		//prepend handle to message
 		//printf("%s\n", message_with_handle);						//display message with handle
-		printf("\n");
-		printf("%s ", prompt);
+		//printf("\n");
+		//printf("%s ", prompt);
 		//printf("%s\n", message);
 
 
