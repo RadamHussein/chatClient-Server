@@ -25,7 +25,7 @@ while True:
 		while True:
 			clientMessage = connectionSocket.recv(1024)
 			if clientMessage:
-				print 'Client > %s' % clientMessage
+				print '%s' % clientMessage
 				serverMessage = raw_input("Enter message: ")
 				print 'Server > %s' % serverMessage
 				connectionSocket.send(serverMessage)

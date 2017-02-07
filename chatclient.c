@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 	char handle[20];						//a string to hold the user's handle
 	char message[501];						//a string containing the user's message
 	char prompt[20];						//a string containing the prompt for user entry
-	chat message_with_handle[514];			//a string containing the message with the handle prepended
+	char message_with_handle[514];			//a string containing the message with the handle prepended
 
 	
 	// Set up the server address struct
