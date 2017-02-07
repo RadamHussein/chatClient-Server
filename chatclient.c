@@ -51,11 +51,12 @@ int main(int argc, char *argv[])
 	struct sockaddr_in serverAddress;
 	struct hostent* serverHostInfo;
 
-	char returnBuffer[501];					//array to hold string response received from server
+	char returnBuffer[514];					//array to hold string response received from server
 	char authenticator[2] = {'#', '\0'};	//a string that should match the authentication message sent from the server
 	char handle[20];						//a string to hold the user's handle
 	char message[501];						//a string containing the user's message
 	char prompt[20];						//a string containing the prompt for user entry
+	chat message_with_handle[514];			//a string containing the message with the handle prepended
 
 	
 	// Set up the server address struct
@@ -86,19 +87,23 @@ int main(int argc, char *argv[])
 
 	//loop accepting messages until user wishes to quit
 	while (quit == 0){
-		printf("Enter a message: ");		//get message from user
-		fgets(message, 500, stdin);
-		printf("%s ", prompt);
-		printf("%s\n", message);
+		//printf("Enter a message: ");								//get message from user
+		printf("%s ", prompt);										//get message from user
+		fgets(message, 501, stdin);									
+		sprintf(message_with_handle, "%s %s", prompt, message);		//prepend handle to message
+		printf("%s\n", message_with_handle)							//display message with handle
+		//printf("%s ", prompt);
+		//printf("%s\n", message);
+
 
 		// Send message to server
-		charsWritten = send(socketFD, message, strlen(message), 0); // Write to the server
+		charsWritten = send(socketFD, message_with_handle, strlen(message_with_handle), 0); // Write to the server
 		if (charsWritten < 0) {
 			fprintf(stderr, "CLIENT ERROR writing to socket\n");
 		}
 
 		//check for completion
-		if (charsWritten < strlen(message)) {
+		if (charsWritten < strlen(message_with_handle)) {
 			fprintf(stderr, "CLIENT: WARNING: Not all data written to socket!\n");
 		}
 
