@@ -94,6 +94,7 @@ int main(int argc, char *argv[])
 		//printf("%s\n", message_with_handle);						//display message with handle
 		//printf("%s ", prompt);
 		//printf("%s\n", message);
+		//adding comments for github....
 
 
 		// Send message to server
