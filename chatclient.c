@@ -7,6 +7,10 @@
 #include <netinet/in.h>
 #include <netdb.h> 
 
+#define GREEN "\x1b[32m"
+#define BLUE "\x1b[34m"
+#define COLOR_RESET "\x1b[0m"
+
 /*
 * This function checks the lenght of user input
 * It returns 0 if the input is bad and 1 if it 
@@ -88,9 +92,9 @@ int main(int argc, char *argv[])
 	//loop accepting messages until user wishes to quit
 	while (quit == 0){
 		//printf("Enter a message: ");								//get message from user
-		printf("%s ", prompt);										//get message from user
+		printf(BLUE "%s ", prompt);										//get message from user
 		fgets(message, 501, stdin);									
-		sprintf(message_with_handle, "%s %s", prompt, message);		//prepend handle to message
+		sprintf(BLUE message_with_handle, "%s %s", prompt, message COLOR_RESET);		//prepend handle to message
 		//printf("%s\n", message_with_handle);						//display message with handle
 		//printf("\n");
 		//printf("%s ", prompt);
@@ -113,7 +117,7 @@ int main(int argc, char *argv[])
 		charsRead = recv(socketFD, returnBuffer, sizeof(returnBuffer) - 1, 0); // Read data from the socket, leaving \0 at end
 		if (charsRead < 0) { fprintf(stderr, "CLIENT: ERROR reading from socket\n"); }
 
-		printf("Server > %s\n", returnBuffer);			  //display returned message
+		printf(GREEN "Server > %s\n", returnBuffer COLOR_RESET);			  //display returned message
 
 		memset(returnBuffer, '\0', sizeof(returnBuffer)); // Clear out the buffer again for reuse
 
