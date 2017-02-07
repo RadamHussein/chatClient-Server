@@ -11,19 +11,26 @@ try:
 	serverSocket.bind(('', serverPort))
 except socket.error as msg:
 	print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+	sys.exit()
 
 #Start listening on socket	
 serverSocket.listen(1)
 print 'Server started on Port: %d' % serverPort
 
-while 1:
+while True:
 	connectionSocket, addr = serverSocket.accept()
 	print 'Connected with ' + addr[0] + ':' + str(addr[1])
 	
-	clientMessage = connectionSocket.recv(1024)
-	print 'Client > %s' % clientMessage
-	serverMessage = raw_input("Enter message: ")
-	print 'Server > %s' % serverMessage
-	connectionSocket.send(serverMessage)
-	#connectionSocket.close()
+	try:
+		while True:
+			clientMessage = connectionSocket.recv(1024)
+			if clientMessage:
+				print 'Client > %s' % clientMessage
+				serverMessage = raw_input("Enter message: ")
+				print 'Server > %s' % serverMessage
+				connectionSocket.send(serverMessage)
+			else: 
+				print >>sys.stderr, 'no more data from client'
+	finally:
+		connectionSocket.close()
 	
