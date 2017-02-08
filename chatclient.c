@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 		//printf("Enter a message: ");								//get message from user
 		printf(BLUE "%s ", prompt);										//get message from user
 		fgets(message, 501, stdin);
-		printf(RESET)									
+		printf(RESET);									
 		sprintf(message_with_handle, "%s %s", prompt);		//prepend handle to message
 		//printf("%s\n", message_with_handle);						//display message with handle
 		//printf("\n");
