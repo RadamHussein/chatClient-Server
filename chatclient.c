@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 		//printf("%s ", prompt);
 		//printf("%s\n", message);
 
-
+/*
 		// Send message to server
 		charsWritten = send(socketFD, message_with_handle, strlen(message_with_handle), 0); // Write to the server
 		if (charsWritten < 0) {
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 		printf("Server > %s\n", returnBuffer);			  //display returned message
 
 		memset(returnBuffer, '\0', sizeof(returnBuffer)); // Clear out the buffer again for reuse
-
+*/
 	}
 
 /*
