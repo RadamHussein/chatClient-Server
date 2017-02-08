@@ -7,10 +7,6 @@
 #include <netinet/in.h>
 #include <netdb.h> 
 
-#define GREEN "\x1b[32m"
-#define BLUE "\x1b[34m"
-//#define BLUE "\x1b[0m"
-#define RESET "\x1b[0m"
 
 /*
 * This function checks the lenght of user input
@@ -95,7 +91,6 @@ int main(int argc, char *argv[])
 		//printf("Enter a message: ");								//get message from user
 		printf("%s ", prompt);										//get message from user
 		fgets(message, 501, stdin);
-		//printf(RESET);									
 		sprintf(message_with_handle, "%s %s", prompt);		//prepend handle to message
 		//printf("%s\n", message_with_handle);						//display message with handle
 		//printf("\n");
