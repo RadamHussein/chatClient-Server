@@ -93,9 +93,9 @@ int main(int argc, char *argv[])
 	//loop accepting messages until user wishes to quit
 	while (quit == 0){
 		//printf("Enter a message: ");								//get message from user
-		printf(BLUE "%s ", prompt);										//get message from user
+		printf("%s ", prompt);										//get message from user
 		fgets(message, 501, stdin);
-		printf(RESET);									
+		//printf(RESET);									
 		sprintf(message_with_handle, "%s %s", prompt);		//prepend handle to message
 		//printf("%s\n", message_with_handle);						//display message with handle
 		//printf("\n");
