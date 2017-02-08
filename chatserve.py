@@ -15,7 +15,8 @@ except socket.error as msg:
 
 #Start listening on socket	
 serverSocket.listen(1)
-print 'Server started on Port: %d' % serverPort
+print 'Server started on HOSTNAME: %s' % socket.gethostbyname(socket.gethostname()) + ' Port: %d' % serverPort
+#print "HOSTNAME: %s" % socket.gethostbyname(socket.gethostname())
 
 while True:
 	connectionSocket, addr = serverSocket.accept()
