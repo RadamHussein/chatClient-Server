@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 	portNumber = atoi(argv[1]); // Get the port number, convert to an integer from a string
 	serverAddress.sin_family = AF_INET; // Create a network-capable socket
 	serverAddress.sin_port = htons(portNumber); // Store the port number
-	serverHostInfo = gethostbyname("localhost");	//ip is localhost
+	serverHostInfo = gethostbyname(argv[2]);	//ip is localhost
 	if (serverHostInfo == NULL) { fprintf(stderr, "CLIENT: ERROR, no such host\n"); exit(0); }
 	memcpy((char*)&serverAddress.sin_addr.s_addr, (char*)serverHostInfo->h_addr, serverHostInfo->h_length); // Copy in the address
 
@@ -92,10 +92,6 @@ int main(int argc, char *argv[])
 		printf("%s ", prompt);										//get message from user
 		fgets(message, 501, stdin);
 		sprintf(message_with_handle, "%s %s", prompt, message);		//prepend handle to message
-		//printf("%s\n", message_with_handle);						//display message with handle
-		//printf("\n");
-		//printf("%s ", prompt);
-		//printf("%s\n", message);
 
 		// Send message to server
 		charsWritten = send(socketFD, message_with_handle, strlen(message_with_handle), 0); // Write to the server
