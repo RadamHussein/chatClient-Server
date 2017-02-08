@@ -9,7 +9,7 @@
 
 #define GREEN "\x1b[32m"
 #define BLUE "\x1b[34m"
-#define COLOR_RESET "\x1b[0m"
+//#define COLOR_RESET "\x1b[0m"
 
 /*
 * This function checks the lenght of user input
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 		charsRead = recv(socketFD, returnBuffer, sizeof(returnBuffer) - 1, 0); // Read data from the socket, leaving \0 at end
 		if (charsRead < 0) { fprintf(stderr, "CLIENT: ERROR reading from socket\n"); }
 
-		printf(GREEN "Server > %s\n", returnBuffer COLOR_RESET);			  //display returned message
+		printf(GREEN "Server > %s\n", returnBuffer);			  //display returned message
 
 		memset(returnBuffer, '\0', sizeof(returnBuffer)); // Clear out the buffer again for reuse
 
