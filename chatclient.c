@@ -91,13 +91,12 @@ int main(int argc, char *argv[])
 		//printf("Enter a message: ");								//get message from user
 		printf("%s ", prompt);										//get message from user
 		fgets(message, 501, stdin);
-		sprintf(message_with_handle, "%s %s", prompt);		//prepend handle to message
-		printf("%s\n", message_with_handle);						//display message with handle
+		sprintf(message_with_handle, "%s %s", prompt, message);		//prepend handle to message
+		//printf("%s\n", message_with_handle);						//display message with handle
 		//printf("\n");
 		//printf("%s ", prompt);
 		//printf("%s\n", message);
 
-/*
 		// Send message to server
 		charsWritten = send(socketFD, message_with_handle, strlen(message_with_handle), 0); // Write to the server
 		if (charsWritten < 0) {
@@ -117,7 +116,7 @@ int main(int argc, char *argv[])
 		printf("Server > %s\n", returnBuffer);			  //display returned message
 
 		memset(returnBuffer, '\0', sizeof(returnBuffer)); // Clear out the buffer again for reuse
-*/
+
 	}
 
 /*
