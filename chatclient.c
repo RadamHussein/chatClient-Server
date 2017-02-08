@@ -13,8 +13,8 @@
 * It returns 0 if the input is bad and 1 if it 
 * is good.
 */
-int checkHandleLength(char *input){
-	if (strlen(input) > 10){
+int checkHandleLength(char *input, int maxLength){
+	if (strlen(input) > maxLength){
 		printf("Error: Your handle must be 10 characters or less!\n");
 
 		return 0;
@@ -32,13 +32,14 @@ int checkHandleLength(char *input){
 */
 void getUserInput(char *input){
 	int validInput = 0;
+	int input_length_limit = 10;
 
 	while (validInput == 0){
 
 		printf("Enter your handle (up to 10 characters): ");
 		fgets(input, 21, stdin);
 
-		validInput = checkHandleLength(input);
+		validInput = checkHandleLength(input, input_length_limit);
 	}
 }
 
@@ -79,6 +80,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "CLIENT: ERROR connectiong\n");
 	}	
 
+	//greet user and get a handle
 	printf("Welcome!\n");
 	getUserInput(handle);
 
